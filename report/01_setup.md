@@ -75,12 +75,3 @@ sequence will instead be modeled as a discrete-time Markov chain in Step 4,
 where the "state" is the previous move or previous outcome, and the next
 move follows a transition probability matrix instead of being drawn fresh
 each round.
-
-## 1.6 What is, and is not, being tested
-
-To be explicit: this project does not test whether players are playing
-"well" or "optimally" in a strategic sense — that would be game theory or
-behavioral economics. It tests one specific, falsifiable probability
-model (i.i.d. uniform play) against real recorded human data, using
-hypothesis testing, confidence intervals, Markov chains, Bayesian
-estimation, and simulation.
