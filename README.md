@@ -94,6 +94,8 @@ Decision: using the PizzaRollExpert/Rock-paper-scissors-data dataset as-is
 
 ## Status
 
-Updated 2026-09-05: decided to use the PizzaRollExpert/Rock-paper-scissors-data
-dataset as-is. Step 1 (Setup / theoretical benchmark) is drafted — see
-`report/01_setup.md`. Next step: Step 2, pull in and format the dataset.
+Updated 2026-09-05: Step 1 (theoretical setup, `report/01_setup.md`) and
+Step 2 (data acquisition & cleaning, `report/02_data.md`) are done. The
+PizzaRollExpert dataset is parsed into `data/rps_rounds.csv` (1,529 rounds,
+243 games); see `data/DATA_DICTIONARY.md` for column definitions. Next
+step: Step 3, chi-square goodness-of-fit test on move frequencies.
