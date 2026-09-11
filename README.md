@@ -16,26 +16,27 @@ strategy. RPS is just a simple, fun setting to practice them on real data.
 
 ## The skeleton of the project
 
-**1. Setup**
-Explain the theoretical benchmark: if play is truly random, each move has
+**1. Setup — done** (`report/01_setup.md`)
+The theoretical benchmark: if play is truly random, each move has
 probability 1/3, and one round doesn't affect the next.
 
-**2. Collect data**
-Play a decent number of rounds (friends/classmates, or a public dataset).
-Record, for every round: what move each player made, and who won.
+**2. Get real data — done** (`report/02_data.md`)
+Ended up using an existing real dataset (PizzaRollExpert/Rock-paper-scissors-data
+on GitHub) instead of collecting our own — see `data/`.
 
-**3. Are the moves actually 1/3-1/3-1/3?**
-Count how often Rock/Paper/Scissors were each played. Use a **chi-square
-goodness-of-fit test** to check if this matches the "equal 1/3 each" theory,
-and build a **confidence interval** around each estimated probability.
+**3. Are the moves actually 1/3-1/3-1/3? — done** (`report/03_uniformity_test.md`)
+**No.** Chi-square goodness-of-fit test: pooled play is not uniform
+(chi² = 19.90, df = 2, p ≈ 0.00005) — Scissors is over-played (37.1% vs.
+the 33.3% benchmark).
 
-**4. Does the previous round affect the next move?**
-Build a table of "what happened last round" vs. "what move came next."
-Use a **chi-square independence test** to check for patterns (e.g., do people
-switch moves after losing?). If a pattern exists, describe it as a **Markov
-chain** (a simple model of "next move depends a bit on the last outcome").
+**4. Does the previous round affect the next move? — done** (`report/04_conditional_response.md`)
+**Yes, strongly.** Chi-square independence test: people cycle *forward*
+(toward the move that beats their own last move) after winning, and cycle
+*backward* after losing (chi² = 48.59, df = 4, p < 0.000001). Modeled as a
+Markov chain (states = Rock/Paper/Scissors) with stationary distribution
+≈ (31.9%, 32.6%, 35.5%).
 
-**5. Update beliefs as more data comes in**
+**5. Update beliefs as more data comes in — next**
 Use **Bayesian estimation**: start with no assumption about a player's
 habits, then update our estimate round by round as more data arrives. Watch
 the estimate get more confident over time — a nice hands-on demo of the
@@ -62,14 +63,26 @@ be more confident (bigger sample, different game, etc.)?
 **9. Appendix**
 Math derivations, data collection notes, and simulation code.
 
-## What this project will eventually include
+## What's actually in this repo
 
-- `data/` — recorded rounds from the RPS experiment
-- `analysis/` or notebook — the statistical tests and Bayesian updating
-- `simulation/` — Monte Carlo simulation code
-- `report` — the final write-up following the skeleton above
+- `data/` — the cleaned dataset (`rps_rounds.csv`) with its data dictionary,
+  plus the original raw source kept for reproducibility (`data/raw/`)
+- `analysis/` — the Python scripts and result files behind each report step
+  (Steps 3–4 so far: `step3_uniformity_test.py`, `step4_conditional_response.py`,
+  their `.json` results, and their charts)
+- `report/` — the write-up, one file per step (`01_setup.md` through
+  `04_conditional_response.md` so far)
+- `simulation/` — not started yet; arrives with Steps 6–7
 
 ## Status
 
-Currently at the planning stage. Next steps: finalize the data collection
-plan, then start on the statistical tests.
+Updated 2026-09-11: Steps 1–4 are complete.
+
+- Step 3: pooled move frequencies are **not** uniform — Scissors is
+  over-played (37.1%), chi² = 19.90, p ≈ 0.00005.
+- Step 4: strong round-to-round dependence — people cycle forward after a
+  win and backward after a loss (chi² = 48.59, p < 0.000001); modeled as a
+  Markov chain with stationary distribution ≈ (Rock 31.9%, Paper 32.6%,
+  Scissors 35.5%).
+
+Next: Step 5, Bayesian estimation of a player's response tendencies.
