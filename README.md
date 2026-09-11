@@ -44,41 +44,57 @@ starting from a deliberately wrong prior shows that enough data
 overwhelms even a confidently incorrect starting belief. Also doubles as
 a hands-on demo of the **Law of Large Numbers**.
 
-**6. Simulate on the computer**
-Use **Monte Carlo simulation** to:
-- show that a simulated random player's move-frequencies settle around 1/3
-  as the number of rounds grows (Central Limit Theorem in action)
-- build a simple "smart" bot that guesses the opponent's next move using the
-  pattern found in step 4, and test (statistically) whether it wins more
-  than 1/3 of the time
-- check how many rounds of real data we'd actually need to reliably detect
-  a pattern, if one exists (a power analysis)
+**6. Simulate on the computer — done** (`report/06_monte_carlo_exploit_bot.md`)
+Three Monte Carlo pieces: (a) simulated random players show the Central
+Limit Theorem narrowing their move-frequency estimate onto 1/3 as rounds
+grow; (b) a simple "exploit" bot built from Step 4's pattern beats a
+synthetic opponent 44.0% of the time (vs. 33.2% for a naive random bot),
+and gets 42.9% in a direct backtest on the real historical data too
+(both far above the 1/3 chance baseline, p ≈ 0 either way); (c) a power
+analysis confirms our sample size had ~98% power to detect an effect the
+size we actually found.
 
-**7. Results**
-Report the test results, confidence/credible intervals, and simulation
-findings, with plots.
+**7. Results — done** (`report/07_results.md`)
+Pulls Steps 3–6 into a single results summary: tables of every test
+statistic, confidence/credible interval, and simulation result, plus the
+four headline plots, tying everything back to Step 1's game-theory
+benchmark.
 
-**8. Discussion & limitations**
-What did we learn about randomness in human behavior? What would we need to
-be more confident (bigger sample, different game, etc.)?
+**8. Discussion & limitations — done** (`report/08_discussion.md`)
+What the results say about human "randomness" (people avoid repeating
+moves far more than chance predicts, and cycle forward after winning /
+backward after losing) and how that connects to the Nash-equilibrium
+benchmark; limitations (undocumented data source, no player IDs, the
+Position A/B split, non-independence of within-game transitions,
+generalizability, model simplifications, an untested "reacting to the
+opponent" alternative hypothesis); and what would increase confidence.
 
-**9. Appendix**
-Math derivations, data collection notes, and simulation code.
+**9. Appendix — done** (`report/09_appendix.md`)
+Full math derivations for every method used (chi-square GoF and
+independence tests with standardized residuals, Wald and Beta/credible
+intervals, the Markov stationary-distribution linear system, Dirichlet-
+multinomial conjugacy, bootstrap and power-analysis methodology), a
+pointer to the data collection notes, and a table inventorying every
+analysis script and what it produces.
 
 ## What's actually in this repo
 
 - `data/` — the cleaned dataset (`rps_rounds.csv`) with its data dictionary,
   plus the original raw source kept for reproducibility (`data/raw/`)
 - `analysis/` — the Python scripts and result files behind each report step
-  (Steps 3–5 so far: `step3_uniformity_test.py`, `step4_conditional_response.py`,
-  `step5_bayesian_updating.py`, their `.json` results, and their charts)
-- `report/` — the write-up, one file per step (`01_setup.md` through
-  `05_bayesian_updating.md` so far)
-- `simulation/` — not started yet; arrives with Steps 6–7
+  (`step3_uniformity_test.py`, `step4_conditional_response.py`,
+  `step5_bayesian_updating.py`, `step6_monte_carlo_exploit_bot.py`, their
+  `.json` results, and their charts — Steps 7–9 are a synthesis of these,
+  with no new scripts of their own)
+- `report/` — the full write-up, one file per step (`01_setup.md` through
+  `09_appendix.md`)
+- `simulation/` — folded into `analysis/step6_monte_carlo_exploit_bot.py`
+  rather than a separate folder
 
 ## Status
 
-Updated 2026-09-11: Steps 1–5 are complete.
+Updated 2026-09-11: **all 9 steps are complete** — the project skeleton
+is done.
 
 - Step 3: pooled move frequencies are **not** uniform — Scissors is
   over-played (37.1%), chi² = 19.90, p ≈ 0.00005.
@@ -89,6 +105,18 @@ Updated 2026-09-11: Steps 1–5 are complete.
 - Step 5: Bayesian (Dirichlet-multinomial) updating converges to the same
   answer as Step 3's frequentist interval, and shows a wrong prior gets
   overwhelmed by enough data.
+- Step 6: a bot exploiting Step 4's pattern wins 44.0% of simulated
+  rounds and 42.9% in a real-data backtest (both vs. 33.3% chance,
+  p ≈ 0); a power analysis confirms our sample size was easily big
+  enough (~98% power) to detect the effect we found.
+- Step 7: all of the above consolidated into one results summary with
+  tables and the four headline plots.
+- Step 8: discussion of what this means for human "randomness" and the
+  game-theory benchmark, plus a full accounting of limitations (data
+  provenance, no player IDs, non-independent transitions,
+  generalizability, model simplifications).
+- Step 9: appendix with complete math derivations, data collection
+  notes, and a reproducibility table for every analysis script.
 
-Next: Step 6, Monte Carlo simulation — build and test an "exploit" bot
-using the Step 4 response pattern.
+Next: optional — assemble `report/01_setup.md` through
+`report/09_appendix.md` into one combined document for final submission.
