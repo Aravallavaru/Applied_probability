@@ -36,11 +36,13 @@ the 33.3% benchmark).
 Markov chain (states = Rock/Paper/Scissors) with stationary distribution
 ≈ (31.9%, 32.6%, 35.5%).
 
-**5. Update beliefs as more data comes in — next**
-Use **Bayesian estimation**: start with no assumption about a player's
-habits, then update our estimate round by round as more data arrives. Watch
-the estimate get more confident over time — a nice hands-on demo of the
-**Law of Large Numbers**.
+**5. Update beliefs as more data comes in — done** (`report/05_bayesian_updating.md`)
+Dirichlet-multinomial Bayesian updating, round by round, from a uniform
+"no assumption" prior. The posterior converges to essentially the same
+answer as Step 3's frequentist confidence interval, and a second run
+starting from a deliberately wrong prior shows that enough data
+overwhelms even a confidently incorrect starting belief. Also doubles as
+a hands-on demo of the **Law of Large Numbers**.
 
 **6. Simulate on the computer**
 Use **Monte Carlo simulation** to:
@@ -68,15 +70,15 @@ Math derivations, data collection notes, and simulation code.
 - `data/` — the cleaned dataset (`rps_rounds.csv`) with its data dictionary,
   plus the original raw source kept for reproducibility (`data/raw/`)
 - `analysis/` — the Python scripts and result files behind each report step
-  (Steps 3–4 so far: `step3_uniformity_test.py`, `step4_conditional_response.py`,
-  their `.json` results, and their charts)
+  (Steps 3–5 so far: `step3_uniformity_test.py`, `step4_conditional_response.py`,
+  `step5_bayesian_updating.py`, their `.json` results, and their charts)
 - `report/` — the write-up, one file per step (`01_setup.md` through
-  `04_conditional_response.md` so far)
+  `05_bayesian_updating.md` so far)
 - `simulation/` — not started yet; arrives with Steps 6–7
 
 ## Status
 
-Updated 2026-09-11: Steps 1–4 are complete.
+Updated 2026-09-11: Steps 1–5 are complete.
 
 - Step 3: pooled move frequencies are **not** uniform — Scissors is
   over-played (37.1%), chi² = 19.90, p ≈ 0.00005.
@@ -84,5 +86,9 @@ Updated 2026-09-11: Steps 1–4 are complete.
   win and backward after a loss (chi² = 48.59, p < 0.000001); modeled as a
   Markov chain with stationary distribution ≈ (Rock 31.9%, Paper 32.6%,
   Scissors 35.5%).
+- Step 5: Bayesian (Dirichlet-multinomial) updating converges to the same
+  answer as Step 3's frequentist interval, and shows a wrong prior gets
+  overwhelmed by enough data.
 
-Next: Step 5, Bayesian estimation of a player's response tendencies.
+Next: Step 6, Monte Carlo simulation — build and test an "exploit" bot
+using the Step 4 response pattern.
