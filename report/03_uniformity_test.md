@@ -93,9 +93,3 @@ the independence test and Markov chain modeling in Step 4 investigate.
   numbers and the chart, reproducible from `data/rps_rounds.csv`
 - `analysis/step3_results.json` — raw numeric results
 - `analysis/step3_move_frequencies.png` — the chart above
-
-## Next step
-
-Step 4: test whether the previous round's outcome predicts the next move
-(chi-square test of independence), and if it does, model the sequence as
-a Markov chain.
